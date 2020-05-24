@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<resultMap id="mm_map" type="mybatis.MemberVo">
+		<result column="mId" property="mId"/>
+		<result column="mName" property="mName"/>
+		<result column="pwd" property="pwd"/>
+		<result column="rDate" property="rDate"/>
+		<result column="grade" property="grade"/>
+		<collection property="photos" javaType="mybatis.MemberPhoto">
+			<result column="serial" property="serial"/>
+			<result column="oriFile" property="oriFile"/>
+			<result column="sysFile" property="sysFile"/>
+		</collection>
+	</resultMap>
+	
+	<select id="login" parameterType="mybatis.MemberVo" resultType="boolean">
+		select case 
+					when count(mId) > 0 then 1
+					else 0
+				end result
+		from member1 where mId=#{mId} and pwd=#{pwd}
+	</select>
+	
+	<select id="count" parameterType="bean.Page" resultType="Integer">
+		select count(mId) cnt from member1 where mName like '%${findStr}%'
+	</select>
+	<select id="select" parameterType="bean.Page" resultMap="mm_map">
+		select * from (
+			select rownum rno, M.* from (
+				select MM.mId mId, mName, grade, to_char(MM.rDate, 'rrrr-mm-dd') rDate, serial, oriFile, sysFile
+				from member1 MM left outer join member_photo MP on MM.mId=MP.mId
+				where mName like '%${findStr}%' or MM.mId like '%${findStr}%'
+				order by rDate desc, mName asc)M
+		)where rno between ${startNo} and ${endNo}
+	</select>
+	
+	<select id="view" parameterType="String" resultMap="mm_map">
+		select M.mId, mName, to_char(M.rDate, 'rrrr-mm-dd') rDate, grade, sysFile from member1 M left outer join member_photo P on M.mId=P.mId where M.mId='${_parameter}'
+	</select>
+	
+	<select id="mp_select" parameterType="String" resultType="String">
+		select sysFile from member_photo where mId='${_parameter}'
+	</select>
+	
+	<insert id="insert" parameterType="mybatis.MemberVo">
+		insert into member1(mId, mName, rDate, grade, pwd) values(#{mId}, #{mName}, #{rDate}, #{grade}, ${pwd})
+	</insert>
+	<insert id="mp_insert" parameterType="mybatis.MemberPhoto">
+		insert into member_photo(serial, mId, rDate, oriFile, sysFile) values(seq_member_photo.nextval, #{mId}, #{rDate}, #{oriFile}, #{sysFile})
+	</insert>
+	<insert id="mp_insert2" parameterType="mybatis.MemberPhoto">
+		insert into member_photo(serial, mId, rDate, oriFile, sysFile) values(seq_member_photo.nextval, #{mId}, #{rDate}, #{oriFile}, #{sysFile})
+	</insert>
+	
+	<update id="update" parameterType="mybatis.MemberVo">
+		update member1 set mName=#{mName}, grade=#{grade} where mId=#{mId} and pwd=#{pwd}
+	</update>
+	
+	<update id="mp_update" parameterType="mybatis.MemberPhoto">
+		update member_photo set rDate=#{rDate}, oriFile=#{oriFile}, sysFile=#{sysFile} where mId=#{mId}
+	</update>
+	
+	<delete id="mp_delete" parameterType="String">
+		delete from member_photo where sysFile='${_parameter}'
+	</delete>
+</mapper>

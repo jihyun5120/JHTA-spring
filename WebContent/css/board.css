@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+#board #header {font-size: 2em;} 
+#board #button {text-align: right;}
+#board #button input[type=button] {
+	border: none; 
+	outline: none;
+	cursor: pointer; 
+	background-color: white; 
+	color: gray; 
+	font-weight: bold; 
+	font-family: 배달의민족 주아; 
+	font-size: 20px; 
+	margin-right: 15px;
+}
+#board #button input[type=button]:hover {background-color: #777; color: white; border-radius: 15px;}
+
+/* select ---------------------- */
+#board #findStr {border: 3px solid rgb(80, 78, 104); border-radius: 10px;}
+#board .title {background-color: rgb(80, 78, 104);}
+#board .title span {display: inline-block; color: white; font-size: 20px; height: 25px; padding-top: 4px;}
+#board .list span {display: inline-block;}
+#board .no {width: 80px; padding-left: 30px;}
+#board .subject {width: 450px;}
+#board .id {width: 120px;}
+#board .mDate {width: 120px;}
+#board .hit {width: 50px;}
+#board .frm_brd {text-align: right;}
+#board .items {margin-top: 3px; margin-bottom: 3px; font-family: 나눔스퀘어라운드; font-weight: 600;}
+#board .items:hover {background: #eee;}
+#board #paging {border-top: 2px solid #aaa; text-align: center; margin-top: 10px; margin-bottom: 30px;}
+#board #paging input[type=button] {border-radius: 10px; border:1px solid #ccc;}
+
+/* insert ---------------------- */
+#board form label {display: inline-block; width: 60px; margin-top: 10px;}
+#board form .content {width: 100%; height: 200px; margin-top: 10px;}
+#board #attList {min-height: 90px;}
+#board .here {background: #aaa;}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+   xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = 
+      "http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean id="coll" class="di_collection.CollectionTest">
+		<property name="list">
+			<list>
+				<value>안녕</value>
+				<value>헬로</value>
+				<value>니하오</value>
+				<value>봉쥬르</value>
+			</list>
+		</property>
+		
+		<property name="set">
+			<set>
+				<value>안녕</value>
+				<value>헬로</value>
+				<value>니하오</value>
+				<value>봉쥬르</value>
+				<value>안녕</value>
+			</set>
+		</property>
+		
+		<property name="map">
+			<map>
+				<entry>
+					<key><value>한국</value></key>
+					<value>안녕</value>
+				</entry>
+				<entry>
+					<key><value>미국</value></key>
+					<value>헬로</value>
+				</entry>
+				<entry>
+					<key><value>중국</value></key>
+					<value>니하오</value>
+				</entry>
+				<entry>
+					<key><value>프랑스</value></key>
+					<value>봉쥬르</value>
+				</entry>
+			</map>
+		</property>
+			
+		<property name="prop">
+			<props>
+				<prop key="한국">안녕</prop>
+				<prop key="미국">헬로</prop>
+				<prop key="중국">니하오</prop>
+				<prop key="프랑스">봉쥬르</prop>
+			</props>
+		</property>
+	</bean>
+</beans>

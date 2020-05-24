@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+   xmlns = "http://www.springframework.org/schema/beans"
+   xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation = 
+      "http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="advisor" class="aop_step3.Advisor"/>
+	<bean id="board" class="aop_step3.BoardDao"/>
+	<bean id="member" class="aop_step3.MemberDao"/>
+	
+	<!-- spring AOP -->
+	<bean id="proxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target" ref="member"/>
+		<property name="interceptorNames">
+			<list>
+				<value>springAdvisor</value> <!-- id값 -->
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="springAdvisor" class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="advice" ref="advisor"></property>
+		<property name="pointcut">
+			<bean class="org.springframework.aop.support.JdkRegexpMethodPointcut">
+				<property name="patterns">
+					<list>
+						<value>.*select.*</value> <!-- select메소드가 Pointcut (반환형과 매개변수가 무엇이든 상관X, 메소드가 select이면 됨.) -->
+						<value>.*insert.*</value>
+						<value>.*view.*</value>
+						<value>.*modify.*</value>
+						<value>.*delete.*</value>			
+					</list>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+</beans>
